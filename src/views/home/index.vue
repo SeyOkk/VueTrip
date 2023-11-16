@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import HomeNavBar from "@/views/home/cpns/HomeNavBar.vue";
-import HomeSearch from "@/views/home/cpns/HomeSearch.vue";
+import HomeNavBar from "@/views/home/HomeNavBar.vue";
+import HomeSearch from "@/views/home/HomeSearch.vue";
 </script>
 
 <style lang="less" scoped>

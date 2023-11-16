@@ -15,13 +15,13 @@ class Request {
 
     // 请求拦截器
     this.instance.interceptors.request.use((config) => {
-      console.log(config);
+      // console.log(config);
       return config;
     });
 
     // 响应拦截器
     this.instance.interceptors.response.use((response) => {
-      console.log(response);
+      // console.log(response);
       return response;
     });
   }

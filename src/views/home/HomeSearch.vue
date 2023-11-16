@@ -1,5 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
+import useCityStore from "@/stores/modules/cityStore";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 const positionClick = () => {
@@ -18,14 +20,16 @@ const positionClick = () => {
 const gotoCity = () => {
   router.push("/city");
 };
+
+const { currentCity } = storeToRefs(useCityStore());
 </script>
 
 <template>
   <div class="location">
-    <div class="city" @click="gotoCity">广州</div>
+    <div class="city" @click="gotoCity">{{ currentCity.cityName }}</div>
     <div class="position" @click="positionClick">
       <span>我的位置</span>
-      <img src="@/assets/img/home/icon_location.png" alt="" />
+      <img src="../../assets/img/home/icon_location.png" alt="" />
     </div>
   </div>
 </template>
