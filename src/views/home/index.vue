@@ -6,13 +6,20 @@
       <img src="@/assets/img/home/banner.webp" alt="" />
     </div>
 
-    <home-search />
+    <home-search :hot-suggests="hotSuggests" />
   </div>
 </template>
 
 <script setup>
 import HomeNavBar from "@/views/home/HomeNavBar.vue";
 import HomeSearch from "@/views/home/HomeSearch.vue";
+import useHomeStore from "@/stores/modules/homeStore";
+import { storeToRefs } from "pinia";
+
+const homeStore = useHomeStore();
+homeStore.fetchHotSuggests();
+
+const { hotSuggests } = storeToRefs(homeStore);
 </script>
 
 <style lang="less" scoped>

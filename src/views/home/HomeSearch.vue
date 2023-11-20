@@ -3,7 +3,14 @@ import { useRouter } from "vue-router";
 import useCityStore from "@/stores/modules/cityStore";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import { formatMonth } from "@/utils/dateUtil";
+import { formatMonthDay, getDiffDays } from "@/utils/dateUtil";
+
+const props = defineProps({
+  hotSuggests: {
+    type: Array,
+    default: () => [],
+  },
+});
 
 const router = useRouter();
 const positionClick = () => {
@@ -26,8 +33,19 @@ const gotoCity = () => {
 const { currentCity } = storeToRefs(useCityStore());
 
 const nowDate = new Date();
-const nowDay = ref(formatMonth(nowDate));
-const nextDay = ref(formatMonth(nowDate.setDate(nowDate.getDate() + 1)));
+const nextDate = new Date().setDate(nowDate.getDate() + 1);
+const startDay = ref(formatMonthDay(nowDate));
+const endDay = ref(formatMonthDay(nextDate));
+const diffDays = ref(getDiffDays(nowDate, nextDate));
+
+const show = ref(false);
+const onConfirm = (values) => {
+  const [start, end] = values;
+  startDay.value = formatMonthDay(start);
+  endDay.value = formatMonthDay(end);
+  diffDays.value = getDiffDays(start, end);
+  show.value = false;
+};
 </script>
 
 <template>
@@ -40,31 +58,63 @@ const nextDay = ref(formatMonth(nowDate.setDate(nowDate.getDate() + 1)));
       </div>
     </div>
 
-    <div class="selection">
+    <div class="item item-flex selection" @click="show = true">
       <div class="common">
         <span class="text">入住</span>
-        <span class="date">{{ nowDay }}</span>
+        <span class="date">{{ startDay }}</span>
       </div>
 
-      <div class="total-day">共一晚</div>
+      <div class="total-day">共{{ diffDays }}晚</div>
 
       <div class="common">
         <span class="text">离店</span>
-        <span class="date">{{ nextDay }}</span>
+        <span class="date">{{ endDay }}</span>
       </div>
+    </div>
+
+    <van-calendar
+      v-model:show="show"
+      type="range"
+      color="#ff9854"
+      :show-confirm="false"
+      @confirm="onConfirm"
+    />
+
+    <div class="item item-flex desc">
+      <span>价格不限</span>
+      <span>人数不限</span>
+    </div>
+
+    <div class="item item-flex desc keyword">
+      <span>关键字/位置/民宿</span>
+    </div>
+
+    <div class="item">
+      <template v-for="item in hotSuggests">
+        <div
+          class="hot-suggest"
+          :style="{
+            color: item.tagText.color,
+            'background-color': item.tagText.background.color,
+          }"
+        >
+          {{ item.tagText.text }}
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <style scoped lang="less">
 .search {
-  padding: 0 10px;
+  padding: 10px;
+  background-color: #f6f8fa;
 
   .location {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px 12px 0 12px;
+    margin: 0 12px;
 
     .city {
       font-size: 15px;
@@ -82,13 +132,18 @@ const nextDay = ref(formatMonth(nowDate.setDate(nowDate.getDate() + 1)));
     }
   }
 
-  .selection {
+  .item {
+    width: 80%;
+    margin: 16px 10px;
+  }
+
+  .item-flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 10px;
-    width: 80%;
+  }
 
+  .selection {
     .common {
       display: flex;
       flex-direction: column;
@@ -108,6 +163,23 @@ const nextDay = ref(formatMonth(nowDate.setDate(nowDate.getDate() + 1)));
       font-size: 13px;
       color: #645d5d;
     }
+  }
+
+  .desc {
+    font-size: 12px;
+    color: #9a9b9f;
+  }
+
+  .keyword {
+    margin: 24px 10px;
+  }
+
+  .hot-suggest {
+    display: inline-block;
+    margin: 3px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    font-size: 12px;
   }
 }
 </style>

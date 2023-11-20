@@ -1,8 +1,13 @@
 :root {
   --primary-color: #ff9854;
   --van-search-left-icon-color: var(--primary-color) !important;
+  --van-calendar-popup-height: 100% !important;
 }
 
 body {
   font-size: 14px;
+}
+
+img {
+  vertical-align: bottom;
 }
