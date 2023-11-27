@@ -46,6 +46,16 @@ const onConfirm = (values) => {
   diffDays.value = getDiffDays(start, end);
   show.value = false;
 };
+
+const gotoSearch = () => {
+  router.push({
+    path: "search",
+    query: {
+      startDay: startDay.value,
+      endDay: endDay.value,
+    },
+  });
+};
 </script>
 
 <template>
@@ -102,13 +112,18 @@ const onConfirm = (values) => {
         </div>
       </template>
     </div>
+
+    <div class="item search-btn">
+      <div class="btn" @click="gotoSearch">开始搜索</div>
+    </div>
   </div>
 </template>
 
 <style scoped lang="less">
 .search {
   padding: 10px;
-  background-color: #f6f8fa;
+  padding-bottom: 0px;
+  background-color: var(--home-bg-color);
 
   .location {
     display: flex;
@@ -134,7 +149,7 @@ const onConfirm = (values) => {
 
   .item {
     width: 80%;
-    margin: 16px 10px;
+    margin: 14px 10px;
   }
 
   .item-flex {
@@ -180,6 +195,20 @@ const onConfirm = (values) => {
     padding: 4px 6px;
     border-radius: 8px;
     font-size: 12px;
+  }
+
+  .search-btn {
+    .btn {
+      width: 328px;
+      height: 38px;
+      font-weight: 500;
+      line-height: 38px;
+      text-align: center;
+      border-radius: 20px;
+      color: #fff;
+      background-image: linear-gradient(90deg, #f8ac1d, #fcaf3f);
+    }
+    margin-bottom: 0;
   }
 }
 </style>

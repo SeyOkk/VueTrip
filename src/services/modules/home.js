@@ -5,3 +5,9 @@ export function getHotSuggests() {
     url: "/home/hotSuggests",
   });
 }
+
+export function getCategories() {
+  return request.get({
+    url: "/home/categories",
+  });
+}

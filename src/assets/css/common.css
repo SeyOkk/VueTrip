@@ -1,5 +1,6 @@
 :root {
   --primary-color: #ff9854;
+  --home-bg-color: #f6f8fa;
   --van-search-left-icon-color: var(--primary-color) !important;
   --van-calendar-popup-height: 100% !important;
 }
