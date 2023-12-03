@@ -11,3 +11,12 @@ export function getCategories() {
     url: "/home/categories",
   });
 }
+
+export function getHouseList(pageNo = 1) {
+  return request.get({
+    url: "/home/houselist",
+    params: {
+      page: pageNo,
+    },
+  });
+}

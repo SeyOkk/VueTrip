@@ -9,6 +9,8 @@
     <home-search :hot-suggests="hotSuggests" />
 
     <home-categories />
+
+    <home-content />
   </div>
 </template>
 
@@ -18,10 +20,12 @@ import HomeSearch from "@/views/home/HomeSearch.vue";
 import useHomeStore from "@/stores/modules/homeStore";
 import { storeToRefs } from "pinia";
 import HomeCategories from "@/views/home/HomeCategories.vue";
+import HomeContent from "./HomeContent.vue";
 
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggests();
 homeStore.fetchCategories();
+homeStore.fetchHouseList();
 
 const { hotSuggests } = storeToRefs(homeStore);
 </script>
