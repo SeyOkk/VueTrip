@@ -9,22 +9,22 @@ const props = defineProps({
 });
 
 const score = computed(() => {
-  return Number(props.house.commentScore);
+  return Number(props.house?.commentScore);
 });
 </script>
 
 <template>
   <div class="container">
     <div class="cover">
-      <img :src="house.image.url" alt="" />
+      <img :src="house?.image?.url" alt="" />
       <div class="info">
         <span class="item summary">
-          {{ house.summaryText }}
+          {{ house?.summaryText }}
         </span>
-        <span class="item house-name">{{ house.houseName }}</span>
+        <span class="item house-name">{{ house?.houseName }}</span>
         <div class="item price-info">
           <van-rate v-model="score" :size="15" allow-half />
-          <div class="price">￥{{ house.finalPrice }}</div>
+          <div class="price">￥{{ house?.finalPrice }}</div>
         </div>
       </div>
     </div>

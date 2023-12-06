@@ -21,11 +21,22 @@ import useHomeStore from "@/stores/modules/homeStore";
 import { storeToRefs } from "pinia";
 import HomeCategories from "@/views/home/HomeCategories.vue";
 import HomeContent from "./HomeContent.vue";
+import useScroll from "@/hooks/UseScroll";
+import { watch } from "vue";
 
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggests();
 homeStore.fetchCategories();
 homeStore.fetchHouseList();
+
+const isBottom = useScroll();
+watch(isBottom, (newVal) => {
+  if (isBottom.value) {
+    homeStore.fetchHouseList().then((res) => {
+      isBottom.value = false;
+    });
+  }
+});
 
 const { hotSuggests } = storeToRefs(homeStore);
 </script>

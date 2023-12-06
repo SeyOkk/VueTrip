@@ -5,6 +5,7 @@ const useHomeStore = defineStore("homeStore", {
   state: () => ({
     hotSuggests: [],
     categories: [],
+    houseListPageNo: 1,
     houseList: [],
   }),
   actions: {
@@ -16,9 +17,10 @@ const useHomeStore = defineStore("homeStore", {
       const res = await getCategories();
       this.categories = res.data;
     },
-    async fetchHouseList(pageNo) {
-      const res = await getHouseList(pageNo);
+    async fetchHouseList() {
+      const res = await getHouseList(this.houseListPageNo);
       this.houseList.push(...res.data);
+      this.houseListPageNo++;
     },
   },
 });
