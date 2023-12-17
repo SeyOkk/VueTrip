@@ -2,16 +2,19 @@ import { onMounted, onUnmounted, ref } from "vue";
 
 export default function useScroll() {
   const isBottom = ref(false);
+  const scrollTop = ref(0);
+  const clientHeight = ref(0);
+  const scrollHeight = ref(0);
 
   const scrollFn = () => {
     const element = document.documentElement;
     // 可视窗口高度
-    const clientHeight = element.clientHeight;
+    clientHeight.value = element.clientHeight;
     // 距离顶部高度
-    const scrollTop = element.scrollTop;
+    scrollTop.value = element.scrollTop;
     // 可滚动高度
-    const scrollHeight = element.scrollHeight;
-    if (scrollHeight <= clientHeight + scrollTop) {
+    scrollHeight.value = element.scrollHeight;
+    if (scrollHeight.value <= clientHeight.value + scrollTop.value) {
       isBottom.value = true;
     }
   };
@@ -29,5 +32,5 @@ export default function useScroll() {
     window.removeEventListener(eventName, scrollFn);
   });
 
-  return isBottom;
+  return { isBottom, scrollTop, scrollHeight, clientHeight };
 }

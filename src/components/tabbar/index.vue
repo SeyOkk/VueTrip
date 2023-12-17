@@ -21,11 +21,17 @@
 <script setup>
 import tabbarData from "@/assets/data/tabbar";
 import { getAssetsImg } from "@/utils/getAssets";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 const currentIndex = ref(0);
+watch(route, (newRoute) => {
+  const index = tabbarData.findIndex((item) => item.path === newRoute.path);
+  if (index === -1) return;
+  currentIndex.value = index;
+});
 
 const changeTabbar = (index, path) => {
   currentIndex.value = index;
@@ -42,6 +48,7 @@ const changeTabbar = (index, path) => {
   height: 50px;
   display: flex;
   border-top: solid 1px #f3f3f3;
+  background-color: #fff;
 
   .tabbar-item {
     flex: 1;

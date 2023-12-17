@@ -10,6 +10,10 @@
 
     <home-categories />
 
+    <div class="search-box" v-show="isShowTopSearch">
+      <search-box />
+    </div>
+
     <home-content />
   </div>
 </template>
@@ -22,14 +26,15 @@ import { storeToRefs } from "pinia";
 import HomeCategories from "@/views/home/HomeCategories.vue";
 import HomeContent from "./HomeContent.vue";
 import useScroll from "@/hooks/UseScroll";
-import { watch } from "vue";
+import { computed, watch } from "vue";
+import SearchBox from "@/components/search-box/SearchBox.vue";
 
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggests();
 homeStore.fetchCategories();
 homeStore.fetchHouseList();
 
-const isBottom = useScroll();
+const { isBottom, scrollTop } = useScroll();
 watch(isBottom, (newVal) => {
   if (isBottom.value) {
     homeStore.fetchHouseList().then((res) => {
@@ -39,6 +44,10 @@ watch(isBottom, (newVal) => {
 });
 
 const { hotSuggests } = storeToRefs(homeStore);
+
+const isShowTopSearch = computed(() => {
+  return scrollTop.value >= 440;
+});
 </script>
 
 <style lang="less" scoped>
@@ -47,6 +56,18 @@ const { hotSuggests } = storeToRefs(homeStore);
     img {
       width: 100%;
     }
+  }
+
+  .search-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 45px;
+    padding: 6px 16px;
+    box-sizing: border-box;
+    background-color: #fff;
   }
 }
 </style>
