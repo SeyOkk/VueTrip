@@ -11,7 +11,7 @@
     <home-categories />
 
     <div class="search-box" v-show="isShowTopSearch">
-      <search-box />
+      <search-box start-date="12.18" end-date="12.19" />
     </div>
 
     <home-content />
@@ -65,8 +65,7 @@ const isShowTopSearch = computed(() => {
     right: 0;
     z-index: 10;
     height: 45px;
-    padding: 6px 16px;
-    box-sizing: border-box;
+    padding: 12px 16px;
     background-color: #fff;
   }
 }

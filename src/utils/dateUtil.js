@@ -3,10 +3,11 @@ import dayjs from "dayjs";
 /**
  * 格式化日期
  * @param date
+ * @param format 日期格式
  * @returns {string} MM月DD日
  */
-export function formatMonthDay(date) {
-  return dayjs(date).format("MM月DD日");
+export function formatMonthDay(date, format = "MM月DD日") {
+  return dayjs(date).format(format);
 }
 
 /**
