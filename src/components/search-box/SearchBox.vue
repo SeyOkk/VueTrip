@@ -1,14 +1,17 @@
 <script setup>
-defineProps({
-  startDate: {
-    type: String,
-    required: true,
-  },
-  endDate: {
-    type: String,
-    required: true,
-  },
-});
+import useMainStore from "@/stores/modules/mainStore";
+import { storeToRefs } from "pinia";
+import { formatMonthDay } from "@/utils/dateUtil";
+import { computed } from "vue";
+
+const { hotelDate } = storeToRefs(useMainStore());
+
+const startDate = computed(() =>
+  formatMonthDay(hotelDate.value.startDate, "MM.DD")
+);
+const endDate = computed(() =>
+  formatMonthDay(hotelDate.value.endDate, "MM.DD")
+);
 </script>
 
 <template>

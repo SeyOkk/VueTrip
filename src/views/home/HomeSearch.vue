@@ -2,8 +2,9 @@
 import { useRouter } from "vue-router";
 import useCityStore from "@/stores/modules/cityStore";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { formatMonthDay, getDiffDays } from "@/utils/dateUtil";
+import useMainStore from "@/stores/modules/mainStore";
 
 const props = defineProps({
   hotSuggests: {
@@ -32,17 +33,18 @@ const gotoCity = () => {
 
 const { currentCity } = storeToRefs(useCityStore());
 
-const nowDate = new Date();
-const nextDate = new Date().setDate(nowDate.getDate() + 1);
-const startDay = ref(formatMonthDay(nowDate));
-const endDay = ref(formatMonthDay(nextDate));
-const diffDays = ref(getDiffDays(nowDate, nextDate));
+const { hotelDate } = storeToRefs(useMainStore());
+const startDay = computed(() => formatMonthDay(hotelDate.value.startDate));
+const endDay = computed(() => formatMonthDay(hotelDate.value.endDate));
+const diffDays = ref(
+  getDiffDays(hotelDate.value.startDate, hotelDate.value.endDate)
+);
 
 const show = ref(false);
 const onConfirm = (values) => {
   const [start, end] = values;
-  startDay.value = formatMonthDay(start);
-  endDay.value = formatMonthDay(end);
+  hotelDate.value.startDate = start;
+  hotelDate.value.endDate = end;
   diffDays.value = getDiffDays(start, end);
   show.value = false;
 };
