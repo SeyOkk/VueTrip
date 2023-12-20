@@ -1,5 +1,8 @@
 import axios from "axios";
 import config from "./config";
+import useMainStore from "@/stores/modules/mainStore";
+
+const mainStore = useMainStore();
 
 class Request {
   instance;
@@ -16,14 +19,21 @@ class Request {
     // 请求拦截器
     this.instance.interceptors.request.use((config) => {
       // console.log(config);
+      mainStore.isLoading = true;
       return config;
     });
 
     // 响应拦截器
-    this.instance.interceptors.response.use((response) => {
-      // console.log(response);
-      return response;
-    });
+    this.instance.interceptors.response.use(
+      (response) => {
+        // console.log(response);
+        mainStore.isLoading = false;
+        return response;
+      },
+      (err) => {
+        mainStore.isLoading = false;
+      }
+    );
   }
 
   request({ url, method, data = null, params = null, headers = null }) {

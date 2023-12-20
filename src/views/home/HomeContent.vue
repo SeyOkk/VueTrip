@@ -6,10 +6,12 @@
         <home-item-v3
           v-if="house.discoveryContentType === 3"
           :house="house.data"
+          @click="gotoDetail(house.data)"
         />
         <home-item-v9
           v-if="house.discoveryContentType === 9"
           :house="house.data"
+          @click="gotoDetail(house.data)"
         />
       </template>
     </div>
@@ -21,9 +23,15 @@ import useHomeStore from "@/stores/modules/homeStore";
 import { storeToRefs } from "pinia";
 import HomeItemV3 from "@/components/home-item/HomeItemV3.vue";
 import HomeItemV9 from "@/components/home-item/HomeItemV9.vue";
+import { useRouter } from "vue-router";
 
 const homeStore = useHomeStore();
 const { houseList } = storeToRefs(homeStore);
+
+const router = useRouter();
+const gotoDetail = (house) => {
+  router.push(`/detail/${house.houseId}`);
+};
 </script>
 
 <style lang="less" scoped>
