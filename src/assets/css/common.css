@@ -3,6 +3,7 @@
   --home-bg-color: #f6f8fa;
   --van-search-left-icon-color: var(--primary-color) !important;
   --van-calendar-popup-height: 100% !important;
+  --van-primary-color: #ff9854 !important;
 }
 
 body {

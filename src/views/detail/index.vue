@@ -1,12 +1,31 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import useDetailStore from "@/stores/modules/detailStore";
+import { storeToRefs } from "pinia";
 
+const router = useRouter();
 const route = useRoute();
-console.log(route.params.id);
+
+const onClickLeft = () => {
+  router.back();
+};
+
+const detailStore = useDetailStore();
+detailStore.fetchDetailInfos(route.params.id);
+
+const { infos } = storeToRefs(detailStore);
+console.log(infos.value);
 </script>
 
 <template>
-  <div>详情页 {{ $route.params.id }}</div>
+  <div>
+    <van-nav-bar
+      title="房屋详情"
+      left-text="旅途"
+      left-arrow
+      @click-left="onClickLeft"
+    />
+  </div>
 </template>
 
 <style scoped lang="less"></style>
