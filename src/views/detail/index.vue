@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import useDetailStore from "@/stores/modules/detailStore";
-import { storeToRefs } from "pinia";
+import DetailSwipe from "@/views/detail/DetailSwipe.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -12,9 +12,6 @@ const onClickLeft = () => {
 
 const detailStore = useDetailStore();
 detailStore.fetchDetailInfos(route.params.id);
-
-const { infos } = storeToRefs(detailStore);
-console.log(infos.value);
 </script>
 
 <template>
@@ -25,6 +22,8 @@ console.log(infos.value);
       left-arrow
       @click-left="onClickLeft"
     />
+
+    <detail-swipe />
   </div>
 </template>
 
