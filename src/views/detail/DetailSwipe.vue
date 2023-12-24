@@ -26,7 +26,7 @@ const formatName = (title) => {
 
 <template>
   <div class="swipes">
-    <van-swipe>
+    <van-swipe :autoplay="3000">
       <template v-for="pic in housePicture.housePics">
         <van-swipe-item>
           <img :src="pic.url" style="width: 100%" alt="" />
