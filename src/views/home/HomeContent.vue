@@ -28,6 +28,7 @@ import { useRouter } from "vue-router";
 const homeStore = useHomeStore();
 const { houseList } = storeToRefs(homeStore);
 
+
 const router = useRouter();
 const gotoDetail = (house) => {
   router.push(`/detail/${house.houseId}`);
